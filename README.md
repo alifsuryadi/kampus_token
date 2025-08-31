@@ -313,37 +313,218 @@ sui client switch --env testnet
 
 ### Interacting with the Contract
 
-#### Minting KAMPUS_COIN
+Below are ready-to-use commands with actual deployed object IDs. Simply copy and paste these commands:
+
+#### 1. KAMPUS_COIN Operations
+
+**Mint Basic KAMPUS Tokens:**
 
 ```bash
 sui client call \
   --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
   --module kampus_coin \
   --function mint \
-  --args [TREASURY_CAP_ID] [AMOUNT] [RECIPIENT_ADDRESS] \
+  --args 0xd746e3a2885626f5fab2225f1c845dd54c914a2241909c564efa4ea53eafa81b 1000000000 0xb28d6e725dc3106cfcd5c55ca7ae6db1f9f95b3d83bb7aae11b467914452ba61 \
   --gas-budget 10000000
 ```
 
-#### Registering as Student
+_This mints 1 KAMPUS token (1000000000 with 9 decimals) to the deployer address_
+
+**Burn KAMPUS Tokens:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module kampus_coin \
+  --function burn \
+  --args 0xd746e3a2885626f5fab2225f1c845dd54c914a2241909c564efa4ea53eafa81b [YOUR_COIN_ID] \
+  --gas-budget 10000000
+```
+
+#### 2. ADVANCED_KAMPUS_COIN Operations
+
+**Toggle Minting (Admin Only):**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function toggle_minting \
+  --args 0x9b0842befe723f719f8cac8ee824de468f117a400ec954709b0cef9112e266f3 0x7e5b3c04ac5a4f56c8670640479608355979c3200b192dbd4f73f570cffee372 \
+  --gas-budget 10000000
+```
+
+**Mint Advanced KAMPUS Tokens (Admin Only):**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function mint_tokens \
+  --args 0x9b0842befe723f719f8cac8ee824de468f117a400ec954709b0cef9112e266f3 0x7e5b3c04ac5a4f56c8670640479608355979c3200b192dbd4f73f570cffee372 5000000000 0xb28d6e725dc3106cfcd5c55ca7ae6db1f9f95b3d83bb7aae11b467914452ba61 \
+  --gas-budget 10000000
+```
+
+_This mints 5 AKAMPUS tokens (5000000000 with 9 decimals) to the deployer address_
+
+**Burn Advanced KAMPUS Tokens:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function burn_tokens \
+  --args 0x7e5b3c04ac5a4f56c8670640479608355979c3200b192dbd4f73f570cffee372 [YOUR_AKAMPUS_COIN_ID] \
+  --gas-budget 10000000
+```
+
+**Split Advanced KAMPUS Coin:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function split_coin \
+  --args [YOUR_AKAMPUS_COIN_ID] 1000000000 \
+  --gas-budget 10000000
+```
+
+_This splits 1 AKAMPUS from your coin_
+
+#### 3. STUDENT_REWARD_TOKEN Operations
+
+**Register as Student:**
 
 ```bash
 sui client call \
   --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
   --module student_reward_token \
   --function register_student \
-  --args [NIM] [NAME] \
+  --args 123456 "John Doe Student" \
   --gas-budget 10000000
 ```
 
-#### Claiming Achievement Rewards
+_Creates a student profile with NIM 123456 and name "John Doe Student"_
+
+**Claim Attendance Reward:**
 
 ```bash
 sui client call \
   --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
   --module student_reward_token \
   --function claim_achievement_reward \
-  --args [REWARD_SYSTEM_ID] [STUDENT_PROFILE_ID] [ACHIEVEMENT_NAME] \
+  --args 0x3da55ca0a86d66a882cc889ea5bdbee689a9af45349bd64f814e32f2c728f29b [YOUR_STUDENT_PROFILE_ID] "attendance" \
   --gas-budget 10000000
+```
+
+_Claims 10 SRT (10000000 with 6 decimals) for attendance_
+
+**Claim Assignment Reward:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module student_reward_token \
+  --function claim_achievement_reward \
+  --args 0x3da55ca0a86d66a882cc889ea5bdbee689a9af45349bd64f814e32f2c728f29b [YOUR_STUDENT_PROFILE_ID] "assignment" \
+  --gas-budget 10000000
+```
+
+_Claims 25 SRT (25000000 with 6 decimals) for assignment completion_
+
+**Claim Exam Pass Reward:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module student_reward_token \
+  --function claim_achievement_reward \
+  --args 0x3da55ca0a86d66a882cc889ea5bdbee689a9af45349bd64f814e32f2c728f29b [YOUR_STUDENT_PROFILE_ID] "exam_pass" \
+  --gas-budget 10000000
+```
+
+_Claims 50 SRT (50000000 with 6 decimals) for passing an exam_
+
+**Claim Project Reward:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module student_reward_token \
+  --function claim_achievement_reward \
+  --args 0x3da55ca0a86d66a882cc889ea5bdbee689a9af45349bd64f814e32f2c728f29b [YOUR_STUDENT_PROFILE_ID] "project" \
+  --gas-budget 10000000
+```
+
+_Claims 100 SRT (100000000 with 6 decimals) for project completion_
+
+**Spend Student Tokens:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module student_reward_token \
+  --function spend_tokens \
+  --args [YOUR_STUDENT_PROFILE_ID] [YOUR_SRT_COIN_ID] "library_access" \
+  --gas-budget 10000000
+```
+
+_Spends SRT tokens for library premium access_
+
+#### 4. View Functions (Query Data)
+
+**Get Student Stats:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module student_reward_token \
+  --function get_student_stats \
+  --args [YOUR_STUDENT_PROFILE_ID] \
+  --gas-budget 1000000
+```
+
+**Get Treasury Info (Advanced KAMPUS):**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function get_treasury_info \
+  --args 0x7e5b3c04ac5a4f56c8670640479608355979c3200b192dbd4f73f570cffee372 \
+  --gas-budget 1000000
+```
+
+**Check Coin Value:**
+
+```bash
+sui client call \
+  --package 0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd \
+  --module advanced_kampus_coin \
+  --function get_coin_value \
+  --args [YOUR_COIN_ID] \
+  --gas-budget 1000000
+```
+
+### Important Notes:
+
+1. **Replace placeholders** like `[YOUR_STUDENT_PROFILE_ID]`, `[YOUR_COIN_ID]` with actual object IDs from your wallet
+2. **Admin functions** (toggle_minting, mint_tokens) can only be called by the admin who owns the AdminCap
+3. **Gas budget** can be increased if transactions fail due to insufficient gas
+4. **Check your objects** first with `sui client objects` to get the correct IDs
+5. **Achievement names** must match exactly: "attendance", "assignment", "exam_pass", "project"
+
+### Getting Your Object IDs:
+
+```bash
+# List all objects owned by your address
+sui client objects
+
+# Get detailed info about a specific object
+sui client object [OBJECT_ID]
+
+# Filter objects by type
+sui client objects --filter StructType --struct-type "0xd513f3f7115b4bf173a3b23524781bcda7b27837ade0d7a51f2189879a86dfdd::student_reward_token::StudentProfile"
 ```
 
 ## Architecture
