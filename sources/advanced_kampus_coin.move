@@ -2,8 +2,6 @@ module kampus_token::advanced_kampus_coin {
     use sui::coin::{Self, Coin, TreasuryCap};
     use sui::object::UID;
     use sui::tx_context::TxContext;
-    use sui::transfer;
-    use sui::event;
     use std::option;
     use std::vector;
     
@@ -40,7 +38,6 @@ module kampus_token::advanced_kampus_coin {
     
     // === ERROR CONSTANTS ===
     const EMINTING_DISABLED: u64 = 0;
-    const ENOT_AUTHORIZED: u64 = 1;
     const EINSUFFICIENT_BALANCE: u64 = 2;
     
     // === INIT FUNCTION ===

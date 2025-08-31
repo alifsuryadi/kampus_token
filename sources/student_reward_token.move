@@ -3,8 +3,6 @@ module kampus_token::student_reward_token {
     use sui::table::{Self, Table};
     use sui::object::UID;
     use sui::tx_context::TxContext;
-    use sui::transfer;
-    use sui::event;
     use std::string::{Self, String};
     use std::option;
     use std::vector;
@@ -94,7 +92,7 @@ module kampus_token::student_reward_token {
         profile: &mut StudentProfile,
         achievement: String,
         ctx: &mut TxContext
-    ) {
+    ): Coin<STUDENT_REWARD_TOKEN> {
         // Cek apakah achievement valid
         assert!(table::contains(&reward_system.reward_rates, achievement), 0);
         
@@ -115,16 +113,16 @@ module kampus_token::student_reward_token {
             reward: reward_amount,
         });
         
-        // Transfer reward ke student
-        sui::transfer::public_transfer(reward_coin, sui::tx_context::sender(ctx));
+        // Return reward coin for better composability
+        reward_coin
     }
     
     // Spend token untuk benefit (contoh: akses premium)
     public fun spend_tokens(
         profile: &mut StudentProfile,
         payment: Coin<STUDENT_REWARD_TOKEN>,
-        benefit: String,
-        ctx: &TxContext
+        _benefit: String,
+        _ctx: &TxContext
     ) {
         let amount = coin::value(&payment);
         profile.total_spent = profile.total_spent + amount;

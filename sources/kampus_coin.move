@@ -1,7 +1,6 @@
 module kampus_token::kampus_coin {
     use sui::coin::{Self, Coin, TreasuryCap};
     use sui::tx_context::TxContext;
-    use sui::transfer;
     use std::option;
     
     // === STRUCTS ===
